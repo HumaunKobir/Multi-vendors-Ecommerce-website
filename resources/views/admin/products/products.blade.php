@@ -50,7 +50,7 @@
                                   @endif
                                 </td>
                                 <td>
-                                    <img src="{{ asset('front/images/product_images/'.$product['product_image']) }}">
+                                    <img src="{{ asset('front/images/product_image/'.$product['product_image']) }}">
                                 </td>
                                 <td>
                                     @if($product['status']==1)

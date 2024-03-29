@@ -60,35 +60,81 @@
                     </div>
                 @endif
                   <form class="forms-sample" @if(empty($product['id'])) action="{{ url('admin/add-edit-product')}}" @else action="{{ url('admin/add-edit-product/'.$product['id']) }}" @endif  method="post" enctype="multipart/form-data">@csrf
-                    <div class="form-group">
-                    <div class="form-group">
+                  <div class="form-group">
                       <label for="category_id">Select Category</label>
                         <select name="category_id" id="category_id"class="form-control">
-                            <option value="category_id">Select Category</option>
+                            <option value="">Select Category</option>
+                            @foreach($categories as $section)
+                            <optgroup label="{{ $section['name']}}"></optgroup>
+                              @foreach($section['categories'] as $category)
+                              <option value="{{ $category['id']}}">&nbsp;&nbsp;&nbsp;&nbsp;--{{ $category['category_name']}}</option>
+                                @foreach($category['subcategories'] as $subcategory)
+                                <option value="{{ $subcategory['id']}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{ $subcategory['category_name']}}&nbsp;--</option>
+                                @endforeach
+                              @endforeach
+                            @endforeach
                         </select>
                     </div>
+                    <div class="form-group">
+                      <label for="brand_id">Select Brand</label>
+                        <select name="brand_id" id="brand_id"class="form-control">
+                            <option value="">Select Brand</option>
+                            @foreach($brands as $brand)
+                            <option value="{{ $brand['id']}}">{{ $brand['name']}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
                       <label for="product_name">Product Name</label>
                       <input type="text" class="form-control" id="product_name" placeholder="Enter Product Name" name="product_name" @if(!empty($product['product_name'])) value="{{ $product['product_name'] }}"@else value="{{ old('product_name')}}" @endif required="">
                     </div>
                     <div class="form-group">
-                      <label for="product_image">Upload Picture</label>
-                      <input type="file" class="form-control" id="product_image" name="product_image">
+                      <label for="product_code">Product Code</label>
+                      <input type="text" class="form-control" id="product_code" placeholder="Enter Product Code" name="product_code" @if(!empty($product['product_code'])) value="{{ $product['product_code'] }}"@else value="{{ old('product_code')}}" @endif required="">
                     </div>
                     <div class="form-group">
-                      <label for="product_discount">Product Discount</label>
-                      <input type="text" class="form-control" id="product_discount" placeholder="Enter product Discount" name="product_discount" @if(!empty($product['product_discount'])) value="{{ $product['product_discount'] }}"@else value="{{ old('product_discount')}}" @endif>
+                      <label for="product_color">Product Color</label>
+                      <input type="text" class="form-control" id="product_color" placeholder="Enter Product Color" name="product_color" @if(!empty($product['product_color'])) value="{{ $product['product_color'] }}"@else value="{{ old('product_color')}}" @endif required="">
+                    </div>
+                    <div class="form-group">
+                      <label for="product_price">Product Price</label>
+                      <input type="text" class="form-control" id="product_price" placeholder="Enter Product Price" name="product_price" @if(!empty($product['product_price'])) value="{{ $product['product_price'] }}"@else value="{{ old('product_price')}}" @endif required="">
+                    </div>
+                    <div class="form-group">
+                      <label for="product_discount">Product Discount (%)</label>
+                      <input type="text" class="form-control" id="product_discount" placeholder="Enter Product Discount (%)" name="product_discount" @if(!empty($product['product_discount'])) value="{{ $product['product_discount'] }}"@else value="{{ old('product_discount')}}" @endif>
+                    </div>
+                    <div class="form-group">
+                      <label for="product_weight">Product Weight</label>
+                      <input type="text" class="form-control" id="product_weight" placeholder="Enter Product Weight" name="product_weight" @if(!empty($product['product_weight'])) value="{{ $product['product_weight'] }}"@else value="{{ old('product_weight')}}" @endif>
+                    </div>
+                    <div class="form-group">
+                      <label for="product_image">Upload Picture</label>
+                      <input type="file" class="form-control" id="product_image" name="product_image" @if(!empty($product['product_image'])) value="{{ $product['product_image'] }}"@else value="{{ old('product_image')}}" @endif>
+                    </div>
+                    <div class="form-group">
+                      <label for="product_video">Upload Video</label>
+                      <input type="file" class="form-control" id="product_video" name="product_video" @if(!empty($product['product_video'])) value="{{ $product['product_video'] }}"@else value="{{ old('product_video')}}" @endif>
+                    </div>
+                    <div class="form-group">
+                      <label for="product_description">Product Description</label>
+                      <textarea rows="3" type="text" class="form-control" id="product_description" placeholder="Enter Product Description" name="product_description" @if(!empty($product['product_description'])) value="{{ $product['product_description'] }}"@else value="{{ old('product_description')}}" @endif></textarea>
                     </div>
                     <div class="form-group">
                       <label for="meta_title">Meta Title</label>
-                      <input type="text" class="form-control" id="meta_title" placeholder="Enter Meta Title" name="meta_title" @if(!empty($product['meta_title'])) value="{{ $product['meta_title'] }}"@else value="{{ old('meta_title')}}" @endif required="">
+                      <input type="text" class="form-control" id="meta_title" placeholder="Enter Meta Title" name="meta_title" @if(!empty($product['meta_title'])) value="{{ $product['meta_title'] }}"@else value="{{ old('meta_title')}}" @endif>
                     </div>
                     <div class="form-group">
                       <label for="meta_description">Meta Description</label>
-                      <input type="text" class="form-control" id="meta_description" placeholder="Enter Meta Description" name="meta_description" @if(!empty($product['meta_description'])) value="{{ $product['meta_description'] }}"@else value="{{ old('meta_description')}}" @endif required="">
+                      <input type="text" class="form-control" id="meta_description" placeholder="Enter Meta Description" name="meta_description" @if(!empty($product['meta_description'])) value="{{ $product['meta_description'] }}"@else value="{{ old('meta_description')}}" @endif>
                     </div>
                     <div class="form-group">
                       <label for="meta_keywords">Meta Keywords</label>
-                      <input type="text" class="form-control" id="meta_keywords" placeholder="Enter Meta Keywords" name="meta_keywords" @if(!empty($product['meta_keywords'])) value="{{ $product['meta_keywords'] }}"@else value="{{ old('meta_keywords')}}" @endif required="">
+                      <input type="text" class="form-control" id="meta_keywords" placeholder="Enter Meta Keywords" name="meta_keywords" @if(!empty($product['meta_keywords'])) value="{{ $product['meta_keywords'] }}"@else value="{{ old('meta_keywords')}}" @endif>
+                    </div>
+                    <div class="form-group">
+                      <label for="is_featured">Feture Item</label>
+                      <input type="checkbox" id="is_featured" name="is_featured" value="Yes" @if(!empty($product['is_featured'])) && $product['is_featured']== "yes" checked="" @endif>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-light">Cancel</button>
