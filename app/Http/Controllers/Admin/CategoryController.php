@@ -18,6 +18,12 @@ class CategoryController extends Controller
     }
     //Delete Category
     public function deleteCategory($id){
+       $category=Category::where('id',$id)->first();
+        //Get Image path
+        $imagePath = 'front/images/category_image/';
+        if(file_exists($imagePath.$category->category_image)){
+            unlink($imagePath.$category->category_image);
+        }
         Category::where('id',$id)->delete();
         return redirect()->back()->with('success_message','Category Deleted Successfully!');
     }
@@ -58,6 +64,7 @@ class CategoryController extends Controller
             $rules = ([
                 'category_name'=> 'required|regex:/^[\pL\s\-]+$/u',
                 'section_id' =>'required',
+                'url' =>'required',
             ]);
             $this->validate($request,$rules);
             if($data['category_discount'] || $data['description']==""){
@@ -75,18 +82,16 @@ class CategoryController extends Controller
                         $request->category_image->move(public_path('front/images/category_images'),$image_name);
                         $category->category_image = $image_name;    
                     }
-                }else{
-                    $category->category_image = "";
                 }
                 $category->parent_id = $data['parent_id'];
                 $category->section_id = $data['section_id'];
                 $category->category_name = $data['category_name'];
-                $category->category_discount = $data['category_discount'];
-                $category->description = $data['description'];
+                $category->category_discount = isset($data['category_discount']) ? $data['category_discount'] : "0";
+                $category->description = isset($data['description']) ? $data['description'] : "-";
                 $category->url = $data['url'];
-                $category->meta_title = $data['meta_title'];
-                $category->meta_description = $data['meta_description'];
-                $category->meta_keywords = $data['meta_keywords'];
+                $category->meta_title = isset($data['meta_title']) ? $data['meta_title'] : "-";
+                $category->meta_description = isset($data['meta_description']) ? $data['meta_description'] : "-";
+                $category->meta_keywords = isset($data['meta_keywords']) ? $data['meta_keywords'] : "-";
                 $category->status = 1;
                 $category->save();
 

@@ -14,7 +14,7 @@ class BrandController extends Controller
         $brands = Brand::get()->toArray();
         return view('admin.brands.brands')->with(compact('brands'));
     }
-      //Update Section Status
+      //Update Brand Status
       public function updateBrandStatus(Request $request){
         if($request->ajax()){
             $data = $request->all();

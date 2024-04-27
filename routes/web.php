@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,10 +74,73 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::post('update-product-status','ProductController@updateProductStatus');
         Route::match(['get','post'],'add-edit-product/{id?}','ProductController@addEditProduct');
         Route::get('delete-product/{id}','ProductController@deleteProduct');
+        Route::get('delete-product-image/{id}','ProductController@deleteProductImage');
+        //Add Attributes Route
+        Route::match(['get','post'],'add-edit-attributes/{id}','ProductController@addAttributes');
+        Route::post('update-attribute-status','ProductController@updateAttributeStatus');
+        Route::get('delete-attribute/{id}','ProductController@deleteAttribute');
+        Route::match(['get','post'],'edit-attribute/{id}','ProductController@editAttribute');
+        //Add edit Filters and values
+        Route::get('filters','FilterController@filters');
+        Route::get('delete-filter/{id}','FilterController@deleteFilter');
+        Route::post('update-filter-status','FilterController@updateFilterStatus');
+        Route::match(['get','post'],'add-edit-filter/{id?}','FilterController@addEditFilter');
+        //Filters Values
+        Route::get('filters-values','FilterController@filtersValues');
+        Route::get('delete-filter_value/{id}','FilterController@deleteFilterValue');
+        Route::post('update-filter-value-status','FilterController@updateFiltersValueStatus');
+        Route::match(['get','post'],'add-edit-filter-value/{id?}','FilterController@addEditFilterValue');
+        Route::post('category-filters','FilterController@categoryFilters');
+        //Add Multiple Images
+        Route::match(['get','post'],'add-images/{id}','ProductController@addImages');
+        Route::post('update-image-status','ProductController@updateImageStatus');
+        Route::get('delete-image/{id}','ProductController@deleteImage');
+        //Banners
+        Route::get('banners','BannersController@banners');
+        Route::post('update-banner-status','BannersController@updateBannerStatus');
+        Route::get('delete-banner/{id}','BannersController@deleteBanner');
+        Route::match(['get','post'],'add-edit-banners/{id?}','BannersController@addEditBanner');
+        //Rating Route
+        Route::get('ratings','RatingController@ratings');
+        Route::post('update-rating-status','RatingController@updateRatingStatus');
+        Route::get('delete-rating/{id}','RatingController@deleteRating');
     });
     
 });
+//Route For Front Page
 Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/','IndexController@index');
+    //Listing Product Route
+     $catUrls = Category::select('url')->where('status',1)->get()->pluck('url')->toArray();
+     foreach($catUrls as $key => $url){
+        Route::match(['get','post'],'/'.$url,'ProductController@listing');
+     }
+     //Singel Product Details Route
+     Route::get('/product/{id}','ProductController@detail');
+     //Get Product Attribute Price
+     Route::post('get-product-price','ProductController@getProductPrice');
+     //Vendor Login/Register Route
+     Route::get('vendor/login-register','VendorController@loginRegister');
+     //Register Route
+     Route::post('vendor/register','VendorController@vendorRegister');
+     //Confirm mail
+     Route::get('vendor/confirm/{code}','VendorController@confirmVendor');
+     //Get Vendor Details and Products Route 
+     Route::get('/products/{vendorid}','ProductController@vendorListing');
+     // Add to Cart Route
+     Route::post('cart/add','ProductController@cartAdd');
+     //Cart Route
+     Route::get('/cart','ProductController@cart');
+    //User Login/Register Route
+    Route::get('user/login-register','UserController@loginRegister');
+    Route::post('user/register','UserController@userRegister');
+    Route::get('user/logout','UserController@userLogout');
+    Route::post('user/login','UserController@userLogin');
+    //user confirm route
+    Route::get('user/confirm/{code}','UserController@confirmAccount');
+    //User Account Route
+    Route::match(['get','post'],'user/account','UserController@userAccount');
+    //Add Rating Route
+    Route::post('add-rating','RatingController@addRating');
 });
 

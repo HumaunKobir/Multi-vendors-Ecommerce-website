@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\ProductsAttribute;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,6 +28,11 @@ class DatabaseSeeder extends Seeder
         //$this->call(SectionTableSeeder::class);
         //$this->call(CategoryTableSeeder::class);
         //$this->call(BrandsTableSeeder::class);
-        $this->call(ProductsTableSeeder::class);
+        //$this->call(ProductsTableSeeder::class);
+        //$this->call(ProductsAttributesTableSeeder::class);
+        //$this->call(BannersTableSeeder::class);
+        //$this->call(FiltersTableSeeder::class);
+        //$this->call(FiltersValuesTableSeeder::class);
+        $this->call(RatingsTableSeeder::class);
     }
 }

@@ -33,7 +33,11 @@
                           <td>{{$admin['mobile']}}</td>
                           <td>{{$admin['email']}}</td>
                           <td>
+                            @if($admin['image'] !="")
                             <img src="{{ asset('admin/images/photos/'.$admin['image']) }}">
+                            @else
+                            <img src="{{ asset('admin/images/photos/profile-dami.png') }}">
+                            @endif
                           </td>
                           <td>
                             @if($admin['status']==1)

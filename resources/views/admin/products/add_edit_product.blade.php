@@ -62,25 +62,28 @@
                   <form class="forms-sample" @if(empty($product['id'])) action="{{ url('admin/add-edit-product')}}" @else action="{{ url('admin/add-edit-product/'.$product['id']) }}" @endif  method="post" enctype="multipart/form-data">@csrf
                   <div class="form-group">
                       <label for="category_id">Select Category</label>
-                        <select name="category_id" id="category_id"class="form-control">
+                        <select name="category_id" id="category_id"class="form-control text-dark">
                             <option value="">Select Category</option>
                             @foreach($categories as $section)
                             <optgroup label="{{ $section['name']}}"></optgroup>
                               @foreach($section['categories'] as $category)
-                              <option value="{{ $category['id']}}">&nbsp;&nbsp;&nbsp;&nbsp;--{{ $category['category_name']}}</option>
+                              <option @if(!empty($product['category_id']== $category['id'])) selected="" @endif value="{{ $category['id']}}">&nbsp;&nbsp;&nbsp;&nbsp;--{{ $category['category_name']}}</option>
                                 @foreach($category['subcategories'] as $subcategory)
-                                <option value="{{ $subcategory['id']}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{ $subcategory['category_name']}}&nbsp;--</option>
+                                <option  @if(!empty($product['category_id']== $subcategory['id'])) selected="" @endif value="{{ $subcategory['id']}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;{{ $subcategory['category_name']}}&nbsp;--</option>
                                 @endforeach
                               @endforeach
                             @endforeach
                         </select>
                     </div>
+                    <div class="loadFilters">
+                      @include('admin.filters.category_filters')
+                    </div>
                     <div class="form-group">
                       <label for="brand_id">Select Brand</label>
-                        <select name="brand_id" id="brand_id"class="form-control">
+                        <select name="brand_id" id="brand_id"class="form-control text-dark">
                             <option value="">Select Brand</option>
                             @foreach($brands as $brand)
-                            <option value="{{ $brand['id']}}">{{ $brand['name']}}</option>
+                            <option @if(!empty($product['brand_id']== $brand['id'])) selected="" @endif value="{{ $brand['id']}}">{{ $brand['name']}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -111,6 +114,10 @@
                     <div class="form-group">
                       <label for="product_image">Upload Picture</label>
                       <input type="file" class="form-control" id="product_image" name="product_image" @if(!empty($product['product_image'])) value="{{ $product['product_image'] }}"@else value="{{ old('product_image')}}" @endif>
+                      @if(!empty($product['product_image']))
+                      <a target="_blank" href="{{ url('front/images/product_image/'.$product['product_image'])}}">View Image</a>&nbsp; |&nbsp;
+                      <a href="javascript:void(0)" class="confirmDelete" module="product-image" moduleid="{{ $product['id']}}">Delete Image</a>
+                      @endif
                     </div>
                     <div class="form-group">
                       <label for="product_video">Upload Video</label>
@@ -118,7 +125,7 @@
                     </div>
                     <div class="form-group">
                       <label for="product_description">Product Description</label>
-                      <textarea rows="3" type="text" class="form-control" id="product_description" placeholder="Enter Product Description" name="product_description" @if(!empty($product['product_description'])) value="{{ $product['product_description'] }}"@else value="{{ old('product_description')}}" @endif></textarea>
+                      <textarea rows="3" type="text" class="form-control" id="product_description" placeholder="Enter Product Description" name="product_description" @if(!empty($product['product_description'])) value="{{ $product['product_description'] }}"@else value="{{ old('product_description')}}" @endif>{{ $product['product_description'] }}</textarea>
                     </div>
                     <div class="form-group">
                       <label for="meta_title">Meta Title</label>
@@ -135,6 +142,10 @@
                     <div class="form-group">
                       <label for="is_featured">Feture Item</label>
                       <input type="checkbox" id="is_featured" name="is_featured" value="Yes" @if(!empty($product['is_featured'])) && $product['is_featured']== "yes" checked="" @endif>
+                    </div>
+                    <div class="form-group">
+                      <label for="is_bestseller">Best Seller Items</label>
+                      <input type="checkbox" id="is_bestseller" name="is_bestseller" value="Yes" @if(!empty($product['is_bestseller'])) && $product['is_bestseller']== "yes" checked="" @endif>
                     </div>
                     <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     <button class="btn btn-light">Cancel</button>

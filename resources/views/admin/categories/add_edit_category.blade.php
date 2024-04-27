@@ -86,7 +86,7 @@
                     </div>
                     <div class="form-group">
                       <label for="description">Category Description</label>
-                      <textarea name="description" id="description" class="form-control" rows="3" @if(!empty($category['description'])) value="{{ $category['description'] }}"@else value="{{ old('description')}}" @endif></textarea>
+                      <textarea name="description" id="description" class="form-control" rows="3" @if(!empty($category['description'])) value="{{ $category['description'] }}"@else value="{{ old('description')}}" @endif>{{ $category['description'] }}</textarea>
                     </div>
                     <div class="form-group">
                       <label for="url">Category URL</label>
