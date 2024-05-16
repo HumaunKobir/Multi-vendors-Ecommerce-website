@@ -14,6 +14,12 @@ class Admin extends Authenticatable
     public function vendorPersonal(){
       return $this->belongsTo('App\Models\Vendor','vendor_id');
     }
+    public function subAdmin(){
+      return $this->belongsTo('App\Models\Subadmin','subadmin_id');
+    }
+    public function deliveryboy(){
+      return $this->belongsTo('App\Models\DeliveryBoy','delivery_boy_id');
+    }
     public function vendorBusiness(){
       return $this->belongsTo('App\Models\vendorsBusinessDetail','vendor_id');
     }

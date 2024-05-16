@@ -41,15 +41,15 @@
                           </td>
                           <td>
                             @if($admin['status']==1)
-                           <a class="updateAdminStatus" id="admin-{{$admin['id']}}" admin_id="{{ $admin['id']}}" href="javascript:void(0)"><i style="font-size:25px;" class="mdi mdi-bookmark-check"status="Active"></i></a> 
+                              <a class="updateAdminStatus" id="admin-{{$admin['id']}}" admin_id="{{ $admin['id']}}" href="javascript:void(0)"><i style="font-size:25px;" class="mdi mdi-bookmark-check"status="Active"></i></a> 
                             @else 
-                            <a class="updateAdminStatus" id="admin-{{$admin['id']}}" admin_id="{{ $admin['id']}}" href="javascript:void(0)"><i style="font-size:25px;" class="mdi mdi-bookmark-outline" status="Inactive"></i></a>
+                              <a class="updateAdminStatus" id="admin-{{$admin['id']}}" admin_id="{{ $admin['id']}}" href="javascript:void(0)"><i style="font-size:25px;" class="mdi mdi-bookmark-outline" status="Inactive"></i></a>
                             @endif
                           </td>
                           <td>
                             @if($admin['type']=="vendor")
-                            <a href="{{url('admin/view-vendor-details/'.$admin['id'])}}">
-                            <i style="font-size:25px;" class="mdi mdi-file-document"></i></a>
+                              <a href="{{url('admin/view-vendor-details/'.$admin['id'])}}">
+                              <i style="font-size:25px;" class="mdi mdi-file-document"></i></a>
                             @endif
                           </td>
                         </tr>

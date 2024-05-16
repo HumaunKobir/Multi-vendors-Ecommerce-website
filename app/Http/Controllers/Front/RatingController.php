@@ -10,9 +10,7 @@ use Auth;
 class RatingController extends Controller
 {
     public function addRating(Request $request){
-        if(Auth::check()){
-            return redirect()->back()->with('error_message','Login to Rate this Product!');
-        }
+        
         if($request->isMethod('post')){
             $data = $request->all();
             $user_id = Auth::user()->id;

@@ -45,6 +45,9 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::match(['get','post'],'update-admin-details','AdminController@updateAdminDetails');
         //Update Vendor Details
         Route::match(['get','post'],'update-vendor-details/{slug}','AdminController@updateVendorDetails');
+         //Update DeliveryBoy Details
+         Route::match(['get','post'],'update-deliveryboy-details','AdminController@updateDeliveryboyDetails');
+         Route::get('view-deliveryboy-details/{id}','AdminController@viewDeliveryDetails');
         //Admin SubAdmin Vendor
         Route::get('admins/{type?}','AdminController@admins');
         //View Vendor Details
@@ -104,9 +107,22 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::get('ratings','RatingController@ratings');
         Route::post('update-rating-status','RatingController@updateRatingStatus');
         Route::get('delete-rating/{id}','RatingController@deleteRating');
+        //User Route
+        Route::get('users','UserController@users');
+        Route::post('update-user-status','UserController@updateUserStatus');
+        Route::get('delete-user/{id}','UserController@deleteUser');
+        //Orders Route
+        Route::get('orders','OrderController@orders');
+        Route::get('orders/{id}','OrderController@orderDetails');
+        Route::post('update-order-status','OrderController@updateOrderStatus');
+        Route::post('update-order-item_status','OrderController@updateOrderItemStatus');
+        //View Order Invoice
+        Route::get('orders/invoice/{id}','OrderController@viewOrderInvoice');
     });
     
 });
+//Download Invoice
+Route::get('orders/invoice/download/{id}','OrderController@viewOrderInvoice');
 //Route For Front Page
 Route::namespace('App\Http\Controllers\Front')->group(function(){
     Route::get('/','IndexController@index');
@@ -119,6 +135,10 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
      Route::get('/product/{id}','ProductController@detail');
      //Get Product Attribute Price
      Route::post('get-product-price','ProductController@getProductPrice');
+     //Subadmin Login/Register Route
+     Route::get('subadmin/login-register','SubAdminController@loginRegister');
+     Route::post('subadmin/register','SubAdminController@subadminRegister');
+     Route::get('subadmin/confirm/{code}','SubAdminController@confirmSubadmin');
      //Vendor Login/Register Route
      Route::get('vendor/login-register','VendorController@loginRegister');
      //Register Route
@@ -131,16 +151,50 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
      Route::post('cart/add','ProductController@cartAdd');
      //Cart Route
      Route::get('/cart','ProductController@cart');
+     //Delete Cart Item
+     Route::post('cart/delete','ProductController@cartDelete');
     //User Login/Register Route
-    Route::get('user/login-register','UserController@loginRegister');
+    Route::get('user/login-register',['as'=>'login','uses'=>'UserController@loginRegister']);
     Route::post('user/register','UserController@userRegister');
     Route::get('user/logout','UserController@userLogout');
     Route::post('user/login','UserController@userLogin');
-    //user confirm route
+    Route::match(['get','post'],'user/forgot-password','UserController@forgotPassword');
     Route::get('user/confirm/{code}','UserController@confirmAccount');
-    //User Account Route
-    Route::match(['get','post'],'user/account','UserController@userAccount');
-    //Add Rating Route
-    Route::post('add-rating','RatingController@addRating');
+    //Delivery Boy Login/Register Route
+     Route::get('deliveryboy/login-register','DeliveryBoyController@loginRegister');
+     Route::post('deliveryboy/register','DeliveryBoyController@deliveryboyRegister');
+     Route::get('deliveryboy/confirm/{code}','DeliveryBoyController@confirmDeliveryboy');
+    //User account Midleware Route
+    Route::group(['middleware'=>['auth']],function(){
+        //User Account Route
+        Route::match(['get','post'],'user/account','UserController@userAccount');
+        //User update Password
+        Route::post('user/update-password','UserController@userUpdatePassword');
+        //Delivery Boy Account Route
+        Route::match(['get','post'],'deliveryboy/account','DeliveryBoyController@deliveryboyAccount');
+        //Delivery Boy update Password
+        Route::post('deliveryboy/update-password','DeliveryBoyController@deliveryboyUpdatePassword');
+        //Add Rating Route
+        Route::post('add-rating','RatingController@addRating');
+        //Checkout Route
+        Route::match(['get','post'],'checkout','ProductController@checkout');
+        //Delivery Address Route
+        Route::post('get-delivery-address','AddressController@getDeliveryAddress');
+        //Save Delivery Address
+        Route::post('save-delivery-address','AddressController@saveDeliveryAddress');
+        //Remove Delivery Address
+        Route::post('remove-delivery-address','AddressController@removeDeliveryAddress');
+        //Thanks 
+        Route::get('thanks','ProductController@thanks');
+        //Users Orders
+        Route::get('user/orders/{id?}','OrderController@orders');
+        //Delivery Boy Get orders
+        Route::get('deliveryboy/{id?}','OrderController@getorders');
+        //Paypal Route
+        Route::get('paypal','PaypalController@paypal');
+        Route::post('pay','PaypalController@pay')->name('payment');
+        Route::get('success','PaypalController@success');
+        Route::get('error','PaypalController@error');
+    });
 });
 

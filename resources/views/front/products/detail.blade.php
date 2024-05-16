@@ -308,14 +308,14 @@
                                     ?>
                                         @if($filterAvailable == "Yes")
                                         <tr>
-                                                <td>{{ $filter['filter_name'] }}</td>
-                                                <td>
-                                                    @foreach($filter['filter_values'] as $value)
-                                                        @if(!empty($productDetails[$filter['filter_column']]) && $value['filter_value'] == $productDetails[$filter['filter_column']])
-                                                        {{ ucwords($value['filter_value'])}}
-                                                        @endif
-                                                    @endforeach
-                                                </td>
+                                            <td>{{ $filter['filter_name'] }}</td>
+                                            <td>
+                                                @foreach($filter['filter_values'] as $value)
+                                                    @if(!empty($productDetails[$filter['filter_column']]) && $value['filter_value'] == $productDetails[$filter['filter_column']])
+                                                    {{ ucwords($value['filter_value'])}}
+                                                    @endif
+                                                @endforeach
+                                            </td>
                                         </tr>
                                         @endif
                                     @endforeach

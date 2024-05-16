@@ -21,6 +21,14 @@
 <div class="Shopping-cart-area pt-60 pb-60">
     <div class="container">
         <div class="row">
+            @if(Session::has('error_message'))
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Error::</strong> {{Session::get('error_message')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            @endif
             <div class="col-12">
                 <div id="appendCartItems">
                     @include('front.products.cart_items')

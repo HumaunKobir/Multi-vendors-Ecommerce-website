@@ -182,28 +182,28 @@ $(document).ready(function(){
             }
         });
     })
-        //Update Products Status
-        $(document).on("click",".updateProductStatus",function(){
-            var status = $(this).children("i").attr("status");
-            var product_id = $(this).attr("product_id");
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type:'post',
-                url:'/admin/update-product-status',
-                data:{status:status,product_id:product_id},
-                success:function(resp){
-                    if(resp['status']==0){
-                        $("#product-"+product_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-outline'status='Inactive'></i>");
-                    }else if(resp['status']==1){
-                        $("#product-"+product_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-check'status='Active'></i>");
-                    }
-                },error:function(){
-                    alert("Error");
+    //Update Products Status
+    $(document).on("click",".updateProductStatus",function(){
+        var status = $(this).children("i").attr("status");
+        var product_id = $(this).attr("product_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type:'post',
+            url:'/admin/update-product-status',
+            data:{status:status,product_id:product_id},
+            success:function(resp){
+                if(resp['status']==0){
+                    $("#product-"+product_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-outline'status='Inactive'></i>");
+                }else if(resp['status']==1){
+                    $("#product-"+product_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-check'status='Active'></i>");
                 }
-            });
-        })
+            },error:function(){
+                alert("Error");
+            }
+        });
+    })
 
     //Custom Deletiion
     $(document).on("click",".confirmDelete",function(){
@@ -350,6 +350,37 @@ $(document).ready(function(){
                 alert("Error");
             }
         });
-    }) 
+    })
+    //Update User Status
+    $(document).on("click",".updateUserStatus",function(){
+        var status = $(this).children("i").attr("status");
+        var user_id = $(this).attr("user_id");
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type:'post',
+            url:'/admin/update-user-status',
+            data:{status:status,user_id:user_id},
+            success:function(resp){
+                if(resp['status']==0){
+                    $("#user-"+user_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-outline'status='Inactive'></i>");
+                }else if(resp['status']==1){
+                    $("#user-"+user_id).html("<i style='font-size:25px;' class='mdi mdi-bookmark-check'status='Active'></i>");
+                }
+            },error:function(){
+                alert("Error");
+            }
+        })
+    })
+    //Show courier name and tracking number in case of shipped order status 
+    $("#courier_name").hide();
+    $("#tracking_number").hide();
+    $("#order_status").on("change",function(){
+        if(this.value == "Shipped"){
+            $("#courier_name").show();
+            $("#tracking_number").show();
+        }
+    });
 
 });

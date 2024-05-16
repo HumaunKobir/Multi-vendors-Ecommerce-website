@@ -28,7 +28,7 @@
                 <div class="col-sm-12">
                     <tr><td>Dear {{$name}}! </td></tr>
                     <tr><td>&nbsp;</td></tr>
-                    <tr><td>Your Vendor Account is Confirmed. Your can login and add Your Personal, Business, and Bank Details to your vendor account to add products so that your account will get approved</td></tr>
+                    <tr><td>Your Vendor Account is Confirmed. You can login and add Your Personal, Business, and Bank Details to your vendor account to add products so that your account will get approved</td></tr>
                     <tr><td>&nbsp;</td></tr>
                 </div>
                 <div class="col-sm-12">

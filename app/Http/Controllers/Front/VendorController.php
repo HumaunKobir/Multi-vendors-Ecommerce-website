@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vendor;
 use App\Models\Admin;
+use App\Models\Subadmin;
 use Validator;
 use DB;
 
@@ -48,7 +49,15 @@ class VendorController extends Controller
             $vendor->save();
 
             $vendor_id = DB::getPdo()->lastInsertId();
-
+            //Insert The vendor account in SubAdmins table
+            $subadmin = new Subadmin;
+            $subadmin->type = 'vendor';
+            $subadmin->vendor_id = $vendor_id;
+            $subadmin->name = $data['name'];
+            $subadmin->mobile = $data['mobile'];
+            $subadmin->email = $data['email'];
+            $subadmin->status = 0;
+            $subadmin->save();
             //Insert The vendor account in Admins table
             $admin = new Admin;
             $admin->type = 'vendor';
@@ -72,9 +81,6 @@ class VendorController extends Controller
              });
 
             DB::commit();
-
-           
-
             //Succes message
             $message = "Thanks for registering as vendor. We will confirm by email to activate your account.";
             return redirect()->back()->with('success_message',$message);
@@ -94,6 +100,7 @@ class VendorController extends Controller
             }else{
                 Admin::where('email',$email)->update(['confirm'=>"Yes"]);
                 Vendor::where('email',$email)->update(['confirm'=>"Yes"]);
+                Subadmin::where('email',$email)->update(['confirm'=>"Yes"]);
                 //Send Email
                 $messageData = [
                     'email'=>$email,

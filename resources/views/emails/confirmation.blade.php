@@ -31,11 +31,11 @@
             </div>
             <div class="col-sm-12">
                 <tr><td><a href="{{ url('/user/confirm/'.$code)}}">{{ url('/user/confirm/'.$code)}}</a></td></tr>
-                <tr><td>&nbsp;</td></tr>
+                <tr><td>&nbsp;</td></tr><br> <br>
                 <tr><td>Thanks & Regrads,</td></tr>
+                <tr><td>Multi Vendor Ecommerce</td></tr>
             </div>
         </div>
-        <tr><td>Multi Vendor Ecommerce</td></tr>
     </div>
 
 

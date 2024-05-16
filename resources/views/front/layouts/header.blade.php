@@ -2,6 +2,7 @@
     use App\Models\Section;
     $sections = Section::sections();
     //echo "<pre>"; print_r($sections); die;
+    $totalCartItems = totalCartItems();
  ?>
  <!-- Begin Header Area -->
  <header>
@@ -27,16 +28,24 @@
                                 <div class="ht-setting-trigger"><span>@if(Auth::check()) My Account @else Loing/Register @endif</span></div>
                                 <div class="setting ht-setting">
                                     <ul class="ht-setting-list">
-                                        <li><a href="{{ url('cart')}}">My Cart</a></li>
-                                        <li><a href="">Checkout</a></li>
-                                        <li><a href="checkout.html">Wishlist</a></li>
-                                        @if(Auth::check())
-                                        <li><a href="{{url('user/account') }}">My Account</a></li>
-                                        <li><a href="{{ url('user/logout') }}">Logout</a></li>
+                                    @if(Auth::check())
+                                        @if(Auth::user()->type=="user")
+                                            <li><a href="{{url('deliveryboy/account') }}">My Account</a></li>
+                                            <li><a href="{{url('deliveryboy') }}">My Orders</a></li>
+                                            <li><a href="{{ url('deliveryboy/logout') }}">Logout</a></li>
                                         @else
+                                            <li><a href="{{ url('cart')}}">My Cart</a></li>
+                                            <li><a href="{{url('checkout')}}">Checkout</a></li>
+                                            <li><a href="{{url('user/account') }}">My Account</a></li>
+                                            <li><a href="{{url('user/orders') }}">My Orders</a></li>
+                                            <li><a href="{{ url('user/logout') }}">Logout</a></li>
+                                        @endif
+                                    @else
+                                        <li><a href="{{ url('cart')}}">My Cart</a></li>
                                         <li><a href="{{url('user/login-register') }}">Customer Login</a></li>
                                         <li><a href="{{ url('vendor/login-register') }}">Vendor Login</a></li>
-                                        @endif
+                                        <li><a href="{{ url('deliveryboy/login-register') }}">DeliveryBoy Login</a></li>
+                                    @endif
                                     </ul>
                                 </div>
                             </li>
@@ -115,49 +124,8 @@
                             <!-- Header Middle Wishlist Area End Here -->
                             <!-- Begin Header Mini Cart Area -->
                             <li class="hm-minicart">
-                                <div class="hm-minicart-trigger">
-                                    <span class="item-icon"></span>
-                                    <span class="item-text">80.00 tk
-                                        <span class="cart-item-count">2</span>
-                                    </span>
-                                </div>
-                                <span></span>
-                                <div class="minicart">
-                                    <ul class="minicart-product-list">
-                                        <li>
-                                            <a href="single-product.html" class="minicart-product-image">
-                                                <img src="{{url('front/images/product/small-size/5.jpg')}}" alt="cart products">
-                                            </a>
-                                            <div class="minicart-product-details">
-                                                <h6><a href="single-product.html">Aenean eu tristique</a></h6>
-                                                <span>40 x 1 tk</span>
-                                            </div>
-                                            <button class="close" title="Remove">
-                                                <i class="fa fa-close"></i>
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <a href="single-product.html" class="minicart-product-image">
-                                                <img src="{{url('front/images/product/small-size/6.jpg')}}" alt="cart products">
-                                            </a>
-                                            <div class="minicart-product-details">
-                                                <h6><a href="single-product.html">Aenean eu tristique</a></h6>
-                                                <span>40 x 1 tk</span>
-                                            </div>
-                                            <button class="close" title="Remove">
-                                                <i class="fa fa-close"></i>
-                                            </button>
-                                        </li>
-                                    </ul>
-                                    <p class="minicart-total">SUBTOTAL: <span>80.00 tk</span></p>
-                                    <div class="minicart-button">
-                                        <a href="shopping-cart.html" class="li-button li-button-fullwidth li-button-dark">
-                                            <span>View Full Cart</span>
-                                        </a>
-                                        <a href="checkout.html" class="li-button li-button-fullwidth">
-                                            <span>Checkout</span>
-                                        </a>
-                                    </div>
+                                <div id="appendHeaderCartItems">
+                                    @include('front.layouts.header_cart_items')
                                 </div>
                             </li>
                             <!-- Header Mini Cart Area End Here -->

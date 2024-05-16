@@ -5,14 +5,16 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
-use Hash;
 use App\Models\Admin;
 use App\Models\Vendor;
 use App\Models\vendorsBusinessDetail;
 use App\Models\vendorsBankDetail;
 use App\Models\Country;
+use App\Models\Subadmin;
+use App\Models\DeliveryBoy;
 use Session;
+use Auth;
+use Hash;
 
 
 
@@ -31,12 +33,12 @@ class AdminController extends Controller
                 'email' => 'required|email',
                 'password'=> 'required',
             ]);
-
+            //For Vendor
             if(Auth::guard('admin')->attempt(['email'=>$data['email'],'password'=>$data['password']])){
                 if(Auth::guard('admin')->user()->type == "vendor" && Auth::guard('admin')->user()->confirm == "No"){
                     return redirect()->back()->with('error_message','Please Confirm Your Email to Activate Your Vendor Account.');
                 }else if(Auth::guard('admin')->user()->type!= "vendor" && Auth::guard('admin')->user()->status == "0"){
-                    return redirect()->back()->with('error_message','Your Admin Account is not Actve');
+                    return redirect()->back()->with('error_message','Your Admin Account is not Active');
                 }else{
                     return redirect('admin/dashboard');
                 }
@@ -214,6 +216,27 @@ class AdminController extends Controller
         return view('admin.settings.update_vendor_details')->with(compact('slug','vendorDetails','countries'));
 
     }
+    //Update Delivery Boy Details
+    public function updateDeliveryboyDetails(Request $request) {   
+        Session::put('page','update_deliverypersonal_details');
+            if($request->isMethod('post')){
+                $data = $request->all();
+                $rules = [
+                    'vendor_name' => 'required|regex:/^[\pL\s\-]+$/u',
+                    'vendor_mobile' => 'required|min:11|numeric',
+                    
+                ];
+                $this->validate($request,$rules);
+                //For Admin Table
+                Admin::where('id',Auth::guard('admin')->user()->id)->update(['name'=> $data['vendor_name'],'mobile'=> $data['vendor_mobile']]);
+                //For Vendor Table
+                DeliveryBoy::where('id',Auth::guard('admin')->user()->delivery_boy_id)->update(['name'=> $data['vendor_name'],'address'=> $data['vendor_address'],'mobile'=> $data['vendor_mobile'],]);
+                return redirect()->back()->with('success_message','DeliveryBoy Information Update Successfully!');
+            }
+            $deliveryboyDetails = DeliveryBoy::where('id',Auth::guard('admin')->user()->delivery_boy_id)->first()->toArray();
+        return view('admin.settings.update_deliveryboy_details')->with(compact('deliveryboyDetails'));
+
+    }
 
     public function checkCurrentPassword(Request $request){
         $data = $request->all();
@@ -273,6 +296,34 @@ class AdminController extends Controller
                  ];
                  Mail::send('emails.vendor_approved',$messageData,function($message)use($email){
                     $message->to($email)->subject('Vendor Account is Approved');
+                 });
+            }
+            //Subadmin Approval
+            if($adminDetails['type'] == "subadmin" && $status == 1){
+                Subadmin::where('id',$adminDetails['subadmin_id'])->update(['status'=>$status]);
+                  //Send Account Approved mail
+                  $email = $adminDetails['email'];
+                  $messageData = [
+                    'email'=>$adminDetails['email'],
+                    'name'=>$adminDetails['name'],
+                    'mobile'=>$adminDetails['mobile'],
+                 ];
+                 Mail::send('emails.subadmin_approved',$messageData,function($message)use($email){
+                    $message->to($email)->subject('Your Account is Approved');
+                 });
+            }
+            //Subadmin Approval
+            if($adminDetails['type'] == "deliveryboy" && $status == 1){
+                DeliveryBoy::where('id',$adminDetails['delivery_boy_id'])->update(['status'=>$status]);
+                  //Send Account Approved mail
+                  $email = $adminDetails['email'];
+                  $messageData = [
+                    'email'=>$adminDetails['email'],
+                    'name'=>$adminDetails['name'],
+                    'mobile'=>$adminDetails['mobile'],
+                 ];
+                 Mail::send('emails.deliveryboy_approved',$messageData,function($message)use($email){
+                    $message->to($email)->subject('Your Account is Approved');
                  });
             }
             return response()->json(['status'=>$status,'admin_id'=>$data['admin_id']]);
