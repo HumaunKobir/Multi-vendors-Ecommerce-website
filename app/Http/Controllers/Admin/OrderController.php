@@ -24,8 +24,13 @@ class OrderController extends Controller
         Session::put('page','orders');
         $adminType = Auth::guard('admin')->user()->type;
         $vendor_id = Auth::guard('admin')->user()->vendor_id;
-        $delivery_boy_name = OrdersLog::where('delivery_boy_name',Auth::user()->name)->get()->toArray();
-        //dd($delivery_boy_id);
+        //$delivery_boy_id = Auth::guard('admin')->user()->delivery_boy_id;
+        if(Auth::check()){
+        $delivery_boy_name = OrdersLog::where('delivery_boy_name',Auth::user()->id)->get()->toArray();
+        }else{
+            $delivery_boy_name = [];
+        }
+        //dd($delivery_boy_name);
         if($adminType == "vendor"){
             $vendorStatus = Auth::guard('admin')->user()->status;
             if($vendorStatus== 0){
@@ -130,7 +135,7 @@ class OrderController extends Controller
                 OrdersProduct::where('id',$data['order_item_id'])->update(['courier_name'=>$data['item_courier_name'],'tracking_number'=>$data['item_tracking_number'],'delivery_boy_name'=>$data['delivery_boy_name']]);
                 Order::where('id',$data['order_item_id'])->update(['delivery_boy_name'=>$data['delivery_boy_name']]);
             }
-            Order::where('id',$data['order_item_id'])->update(['delivery_boy_name'=>$data['delivery_boy_name']]);
+            Order::where('id',$data['order_item_id'])->update(['delivery_boy_name'=>$data['delivery_boy_name'],'order_status'=>$data['order_item_status']]);
             OrdersProduct::where('id',$data['order_item_id'])->update(['item_status'=>$data['order_item_status'],'delivery_boy_name'=>$data['delivery_boy_name']]);
             $getOrderId = OrdersProduct::select('order_id')->where('id',$data['order_item_id'])->first()->toArray();
             //Update order log

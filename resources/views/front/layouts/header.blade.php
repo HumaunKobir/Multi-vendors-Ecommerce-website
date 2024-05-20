@@ -28,24 +28,17 @@
                                 <div class="ht-setting-trigger"><span>@if(Auth::check()) My Account @else Loing/Register @endif</span></div>
                                 <div class="setting ht-setting">
                                     <ul class="ht-setting-list">
-                                    @if(Auth::check())
-                                        @if(Auth::user()->type=="user")
-                                            <li><a href="{{url('deliveryboy/account') }}">My Account</a></li>
-                                            <li><a href="{{url('deliveryboy') }}">My Orders</a></li>
-                                            <li><a href="{{ url('deliveryboy/logout') }}">Logout</a></li>
-                                        @else
-                                            <li><a href="{{ url('cart')}}">My Cart</a></li>
-                                            <li><a href="{{url('checkout')}}">Checkout</a></li>
-                                            <li><a href="{{url('user/account') }}">My Account</a></li>
-                                            <li><a href="{{url('user/orders') }}">My Orders</a></li>
-                                            <li><a href="{{ url('user/logout') }}">Logout</a></li>
-                                        @endif
-                                    @else
                                         <li><a href="{{ url('cart')}}">My Cart</a></li>
+                                        @if(Auth::check())
+                                        <li><a href="{{url('checkout')}}">Checkout</a></li>
+                                        <li><a href="{{url('user/account') }}">My Account</a></li>
+                                        <li><a href="{{url('user/orders') }}">My Orders</a></li>
+                                        <li><a href="{{ url('user/logout') }}">Logout</a></li>
+                                        @else
                                         <li><a href="{{url('user/login-register') }}">Customer Login</a></li>
                                         <li><a href="{{ url('vendor/login-register') }}">Vendor Login</a></li>
                                         <li><a href="{{ url('deliveryboy/login-register') }}">DeliveryBoy Login</a></li>
-                                    @endif
+                                        @endif
                                     </ul>
                                 </div>
                             </li>

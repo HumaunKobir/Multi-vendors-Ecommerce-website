@@ -43,7 +43,8 @@ class Product extends Model
     //Product Attribute Discount
     public static function getDiscountAttributePrice($product_id,$size){
         $proAttrPrice = ProductsAttribute::where(['product_id'=>$product_id,'size'=>$size])->first()->toArray();
-        $proDitails = Product::select('product_discount','category_id')->where('id',$product_id)->first();
+        //dd($proAttrPrice);
+        $proDitails = Product::select('product_discount','category_id')->where('id',$product_id)->first()->toArray();
         $proDitails = json_decode(json_encode($proDitails),true);
         $catDitails = Category::select('category_discount')->where('id',$proDitails['category_id'])->first();
         $catDitails = json_decode(json_encode($catDitails),true);

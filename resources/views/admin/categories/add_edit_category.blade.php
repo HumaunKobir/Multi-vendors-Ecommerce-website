@@ -62,7 +62,7 @@
                   <form class="forms-sample" @if(empty($category['id'])) action="{{ url('admin/add-edit-category')}}" @else action="{{ url('admin/add-edit-category/'.$category['id']) }}" @endif  method="post" enctype="multipart/form-data">@csrf
                     <div class="form-group">
                       <label for="category_name">Category Name</label>
-                      <input type="text" class="form-control" id="section_name" placeholder="Enter Section Name" name="category_name" @if(!empty($category['category_name'])) value="{{ $category['category_name'] }}"@else value="{{ old('category_name')}}" @endif required="">
+                      <input type="text" class="form-control" id="section_name" placeholder="Category Name" name="category_name" @if(!empty($category['category_name'])) value="{{ $category['category_name'] }}"@else value="{{ old('category_name')}}" @endif required="">
                     </div>
                     <div class="form-group">
                       <label for="section_id">Select Section</label>
@@ -86,7 +86,7 @@
                     </div>
                     <div class="form-group">
                       <label for="description">Category Description</label>
-                      <textarea name="description" id="description" class="form-control" rows="3" @if(!empty($category['description'])) value="{{ $category['description'] }}"@else value="{{ old('description')}}" @endif>{{ $category['description'] }}</textarea>
+                      <textarea type="text" name="description" id="description" class="form-control" rows="3" @if(!empty($category['description'])) value="{{ $category['description'] }}"@else value="{{ old('description')}}" @endif>{{ $category['description'] }}</textarea>
                     </div>
                     <div class="form-group">
                       <label for="url">Category URL</label>

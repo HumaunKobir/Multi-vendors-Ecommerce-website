@@ -54,7 +54,7 @@ class FilterController extends Controller
             $data = $request->all();
             $cat_ids = implode(',',$data['cat_ids']);
             $rules = ([
-                'filter_name'=> 'required|regex:/^[\pL\s\-]+$/u',
+                'filter_name'=> 'required',
                 'filter_column'=>'required',
             ]);
             $this->validate($request,$rules);

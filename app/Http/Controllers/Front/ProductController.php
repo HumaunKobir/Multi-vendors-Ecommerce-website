@@ -163,7 +163,8 @@ class ProductController extends Controller
 
             }else{
                 //user is not logged in
-                $user_id = 0;
+                $session_id = Session::getId();
+                Session::put('session_id',$session_id);
                 $countProducts = Cart::where(['product_id'=>$data['product_id'],'size'=>$data['size'],'session_id'=>$session_id])->count();
             }
             if($countProducts > 0){
@@ -171,8 +172,11 @@ class ProductController extends Controller
             }
             //Save item in Cart table
             $item = new Cart;
-            $item->user_id = Auth::user()->id;
-            $item->session_id = $session_id;
+            if(Auth::check()){
+                $item->user_id = Auth::user()->id;
+            }else{
+                $item->session_id = $session_id;
+            }
             $item->product_id = $data['product_id'];
             $item->size = $data['size'];
             $item->quantity = $data['quantity'];

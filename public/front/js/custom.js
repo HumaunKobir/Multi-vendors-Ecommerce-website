@@ -67,7 +67,7 @@ $(document).ready(function(){
                         $("#register-"+i).html(error);
                         setTimeout(function(){
                             $("#register-"+i).css({'display':'none'});
-                        },3000);
+                        },9000);
                     });
                 }else if(resp.type=="success"){
                     window.location.href = resp.url;
@@ -94,14 +94,14 @@ $(document).ready(function(){
                         $("#login-"+i).html(error);
                         setTimeout(function(){
                             $("#login-"+i).css({'display':'none'});
-                        },3000);
+                        },9000);
                     });
                 }else if(resp.type=="incorrect"){
                     $("#login-error").attr('style','color:red');
                     $("#login-error").html(resp.message);
                     setTimeout(function(){
                         $("#login-error").css({'display':'none'});
-                    },3000);
+                    },9000);
                 }else if(resp.type=="success"){
                     $("#register-success").attr('style','color:green');
                     $("#register-success").html(resp.message);
@@ -160,14 +160,14 @@ $(document).ready(function(){
                         $("#account-"+i).html(error);
                         setTimeout(function(){
                             $("#account-"+i).css({'display':'none'});
-                        },3000);
+                        },9000);
                     });
                 }else if(resp.type=="success"){
                     $("#account-success").attr('style','color:green');
                     $("#account-success").html(resp.message);
                     setTimeout(function(){
                         $("#account-success").css({'display':'none'});
-                    },3000);
+                    },9000);
                 }
             },error:function(){
                 alert("Error");

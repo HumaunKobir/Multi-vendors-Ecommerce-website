@@ -32,11 +32,11 @@ class DatabaseSeeder extends Seeder
         //$this->call(ProductsAttributesTableSeeder::class);
         //$this->call(BannersTableSeeder::class);
         //$this->call(FiltersTableSeeder::class);
-        //$this->call(FiltersValuesTableSeeder::class);
+        $this->call(FiltersValuesTableSeeder::class);
         //$this->call(RatingsTableSeeder::class);
         //$this->call(DeliveryAddressTableSeeder::class);
         //$this->call(OrderStatusTableSeeder::class);
         //$this->call(OrderItemStatusTableSeeder::class);
-        $this->call(DeliveryBoysTableSeeder::class);
+        //$this->call(DeliveryBoysTableSeeder::class);
     }
 }

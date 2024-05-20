@@ -46,21 +46,16 @@ class UserController extends Controller
                 $redirectTo = url('user/login-register');
                 return response()->json(['type'=>'success','url'=>$redirectTo,'message'=>'Please confirm to Activate your Account!']);
                 //send email
-                // $email = $data['email'];
-                // $messageData =['name'=>$data['name'],'mobile'=>$data['mobile'],'email'=>$data['email']];
-                // Mail::send('emails.register',$messageData,function($message)use($email){
-                //     $message->to($email)->subject('Welcome to multi vendor Ecommerce');
-                // });
-                // if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
-                //     $redirectTo = url('cart');
-                //       //Update user cart with user id
-                //       if(!empty(Session::get('session_id'))){
-                //         $user_id = Auth::user()->id;
-                //         $session_id = Session::get('session_id');
-                //         Cart::where('session_id',$session_id)->update(['user_id'=>$user_id]);
-                //     }
-                //     return response()->json(['type'=>'success','url'=>$redirectTo]);
-                // }
+                if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password']])){
+                    $redirectTo = url('cart');
+                      //Update user cart with user id
+                      if(!empty(Session::get('session_id'))){
+                        $user_id = Auth::user()->id;
+                        $session_id = Session::get('session_id');
+                        Cart::where('session_id',$session_id)->update(['user_id'=>$user_id]);
+                    }
+                    return response()->json(['type'=>'success','url'=>$redirectTo]);
+                }
             }else{
                 return response()->json(['type'=>'error','errors'=>$validator->messages()]);
             }

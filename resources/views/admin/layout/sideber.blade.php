@@ -87,7 +87,7 @@
             </div>
         </li>
         <li class="nav-item">
-            <a @if(Session::get('page')=="view_admins" || Session::get('page')=="view_subadmins" || Session::get('page')=="view_vendors" || Session::get('page')=="view_all") style= "background:#4B49AC !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-adminss" aria-expanded="false" aria-controls="ui-adminss">
+            <a @if(Session::get('page')=="view_admins" || Session::get('page')=="view_subadmins" || Session::get('page')=="view_vendors" || Session::get('page')=="view_deliveryboy" || Session::get('page')=="view_all") style= "background:#4B49AC !important; color:#fff !important;" @endif class="nav-link" data-toggle="collapse" href="#ui-adminss" aria-expanded="false" aria-controls="ui-adminss">
             <i class="icon-layout menu-icon"></i>
             <span class="menu-title">Admin Management</span>
             <i class="menu-arrow"></i>
@@ -97,7 +97,8 @@
                 <ul class="nav flex-column sub-menu"style = "background:#fff !important; color:#4B49AC !importent;">
                     <li class="nav-item"> <a @if(Session::get('page')=="view_admins") style= "background:#4B49AC !important; color:#fff !important;" @else style= "background:#fff !important; color:#4B49AC !important;"  @endif class="nav-link" href="{{ url('admin/admins/admin')}}">Admin</a></li>
                     <li class="nav-item"> <a @if(Session::get('page')=="view_subadmins") style= "background:#4B49AC !important; color:#fff !important;" @else style= "background:#fff !important; color:#4B49AC !important;"  @endif class="nav-link" href="{{ url('admin/admins/subadmin')}}">Sub Admin</a></li>
-                    <li class="nav-item"> <a @if(Session::get('page')=="view_vendors") style= "background:#4B49AC !important; color:#fff !important;" @else style= "background:#fff !important; color:#4B49AC !important;"  @endif class="nav-link" href="{{ url('admin/admins/vendor')}}">Vendor</a></li>  
+                    <li class="nav-item"> <a @if(Session::get('page')=="view_vendors") style= "background:#4B49AC !important; color:#fff !important;" @else style= "background:#fff !important; color:#4B49AC !important;"  @endif class="nav-link" href="{{ url('admin/admins/vendor')}}">Vendor</a></li>
+                    <li class="nav-item"> <a @if(Session::get('page')=="view_deliveryboy") style= "background:#4B49AC !important; color:#fff !important;" @else style= "background:#fff !important; color:#4B49AC !important;"  @endif class="nav-link" href="{{ url('admin/admins/deliveryboy')}}">DeliveryBoy</a></li>   
                     <li class="nav-item"> <a @if(Session::get('page')=="view_all") style= "background:#4B49AC !important; color:#fff !important;" @else style= "background:#fff !important; color:#4B49AC !important;"  @endif class="nav-link" href="{{ url('admin/admins')}}">All</a></li>  
                 </ul>
                 @else

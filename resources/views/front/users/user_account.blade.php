@@ -59,22 +59,22 @@
                                 <div class="col-md-12 col-12 mb-20">
                                     <label for="user-name">User Name</label>
                                     <input id="user-name" class="mb-0" type="text" name="name" value="{{Auth::user()->name}}">
-                                    <p id="account-name"></p>
+                                    <p id="account-user-name"></p>
                                 </div>
                                 <div class="col-md-12 col-12 mb-20">
                                     <label for="user-address">User Address</label>
                                     <input id="user-address" class="mb-0" type="text" name="address" value="{{Auth::user()->address}}">
-                                    <p id="account-address"></p>
+                                    <p id="account-user-address"></p>
                                 </div>
                                 <div class="col-md-12 col-12 mb-20">
                                     <label for="user-city">User City</label>
                                     <input id="user-city" class="mb-0" type="text" name="city" value="{{Auth::user()->city}}">
-                                    <p id="account-city"></p>
+                                    <p id="account-user-city"></p>
                                 </div>
                                 <div class="col-md-12 col-12 mb-20">
                                     <label for="user-state">User State</label>
                                     <input id="user-state" class="mb-0" type="text" name="state" value="{{Auth::user()->state}}">
-                                    <p id="account-state"></p>
+                                    <p id="account-user-state"></p>
                                 </div>
                                 <div class="col-md-12 col-12 mb-20">
                                     <label for="user-country">User Country</label>
@@ -84,17 +84,17 @@
                                         <option value="{{ $country['country_name']}}" @if(isset(Auth::user()->country) && $country['country_name'] == Auth::user()->country) selected @endif>{{ $country['country_name']}}</option>
                                         @endforeach
                                     </select>
-                                    <p id="account-country"></p>
+                                    <p id="account-user-country"></p>
                                 </div>
                                 <div class="col-md-12 col-12 mb-20">
                                     <label for="user-pincode">User Pincode</label>
                                     <input id="user-pincode" class="mb-0" type="text" name="pincode" value="{{Auth::user()->pincode}}">
-                                    <p id="account-pincode"></p>
+                                    <p id="account-user-pincode"></p>
                                 </div>
                                 <div class="col-md-12 col-12 mb-20">
                                     <label for="user-mobile">User Mobile</label>
                                     <input id="user-mobile" class="mb-0" type="text" name="mobile" value="{{Auth::user()->mobile}}">
-                                    <p id="account-mobile"></p>
+                                    <p id="account-user-mobile"></p>
                                 </div>
                                 <div class="col-md-12">
                                     <button class="register-button mt-0">Update Details</button>

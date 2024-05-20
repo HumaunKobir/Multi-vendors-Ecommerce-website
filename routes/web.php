@@ -170,10 +170,6 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         Route::match(['get','post'],'user/account','UserController@userAccount');
         //User update Password
         Route::post('user/update-password','UserController@userUpdatePassword');
-        //Delivery Boy Account Route
-        Route::match(['get','post'],'deliveryboy/account','DeliveryBoyController@deliveryboyAccount');
-        //Delivery Boy update Password
-        Route::post('deliveryboy/update-password','DeliveryBoyController@deliveryboyUpdatePassword');
         //Add Rating Route
         Route::post('add-rating','RatingController@addRating');
         //Checkout Route
@@ -188,13 +184,14 @@ Route::namespace('App\Http\Controllers\Front')->group(function(){
         Route::get('thanks','ProductController@thanks');
         //Users Orders
         Route::get('user/orders/{id?}','OrderController@orders');
-        //Delivery Boy Get orders
-        Route::get('deliveryboy/{id?}','OrderController@getorders');
+        //View Order Invoice
+        Route::get('orders/invoice/{id}','OrderController@viewOrderInvoiceUser');
         //Paypal Route
         Route::get('paypal','PaypalController@paypal');
         Route::post('pay','PaypalController@pay')->name('payment');
         Route::get('success','PaypalController@success');
         Route::get('error','PaypalController@error');
+        
     });
 });
 

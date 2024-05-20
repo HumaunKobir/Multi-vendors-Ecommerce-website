@@ -255,7 +255,7 @@ class AdminController extends Controller
             $title = ucfirst($type).'s';
             Session::put('page','view_'.strtolower($title));
         }else{
-            $title = "All Admins/Subadmins/Vendors";
+            $title = "All Admins/Subadmins/Vendors/DeliveryBoy";
             Session::put('page','view_all');
         }
         $admins = $admins->get()->toArray();

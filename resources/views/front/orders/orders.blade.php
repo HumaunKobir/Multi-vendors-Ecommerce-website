@@ -32,6 +32,7 @@
                             <th>Payment Method</th>
                             <th>Total Amount</th>
                             <th>Created on</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -46,6 +47,8 @@
                                 <td>{{$order['payment_method']}}</td>
                                 <td>{{$order['total']}}</td>
                                 <td>{{date('d-m-Y h:i:s',strtotime($order['created_at']));}}</td>
+                                <td><a target="_blank" href="{{ url('orders/invoice/'.$order['id']) }}">
+                                <i style="font-size:25px;" class="mdi mdi-printer"></i>Print Invoice</a></td>
                             </tr>
                         @endforeach
                         </tbody>
